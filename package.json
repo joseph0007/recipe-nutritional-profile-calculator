@@ -1,0 +1,14 @@
+{
+  "name": "recipe-nutritional-profile-calculator",
+  "version": "1.0.0",
+  "description": "A recipe nutritional calculator",
+  "main": "recipeNutritionalProfileCalculator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joseph Joy",
+  "license": "ISC",
+  "dependencies": {
+    "convert-units": "^2.3.4"
+  }
+}
