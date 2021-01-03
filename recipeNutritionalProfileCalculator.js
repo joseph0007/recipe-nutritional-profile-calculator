@@ -216,7 +216,7 @@ const calcRecipeNutriProfile = (ingredientsList) => {
 };
 
 //get the nutriprofile
-exports.getNutriProfile = (ingredientsList) => {
+const getNutriProfile = (ingredientsList) => {
   if (!ingredientsList.length)
     throw new Error("Please provide an ingredient list :(");
 
@@ -244,3 +244,5 @@ exports.getNutriProfile = (ingredientsList) => {
   //STEP 2:
   return calcRecipeNutriProfile(ingredientsList);
 };
+
+module.exports = getNutriProfile;
