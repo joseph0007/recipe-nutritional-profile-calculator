@@ -30,7 +30,7 @@ const getNutriProfile = require('recipe-nutritional-profile-calculator');
 const ingredientsList = [
   {
     name: "MILK",
-    quantity: "200",
+    quantity: 200,
     unit: "ml",
     nutrientProfile: {
       // ... usda object
@@ -38,7 +38,7 @@ const ingredientsList = [
   },
   {
     name: "JAGGERY",
-    quantity: "10",
+    quantity: 10,
     unit: "g",
     nutrientProfile: {
       // ... usda object
