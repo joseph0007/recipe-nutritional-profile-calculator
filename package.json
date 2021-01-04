@@ -1,6 +1,6 @@
 {
   "name": "recipe-nutritional-profile-calculator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A recipe nutritional calculator",
   "main": "recipeNutritionalProfileCalculator.js",
   "keywords": [
