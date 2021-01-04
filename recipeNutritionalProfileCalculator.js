@@ -6,6 +6,7 @@ const calcMicroMacro = (list) => {
   const micros = [];
   let energy;
 
+  // All the basic macro nutrient check
   const macroNutrientArr = [
     /carbohydrate/,
     /total lipid/,
@@ -18,6 +19,7 @@ const calcMicroMacro = (list) => {
     /water/,
   ];
 
+  // all the basic micronutrients check
   const microNutrientArr = [
     /Vitamin/,
     /choline/,
@@ -67,6 +69,7 @@ const calcMicroMacro = (list) => {
     /selenium/,
   ];
 
+  // segregating all the nutrient information
   list.forEach((el1) => {
     const boolMacro = macroNutrientArr.map((el) =>
       el.test(el1.nutrientName.toLowerCase())
@@ -95,6 +98,7 @@ const calcMicroMacro = (list) => {
   };
 };
 
+// function to calculate the nutrient value according to the amount of that ingredient used!
 const calcAccToQuantity = (ingredient, multiplier) => {
   //MACRO
   if (ingredient.nutrientProfile.foodNutrients.macros)
@@ -120,7 +124,7 @@ const calcRecipeNutriProfile = (ingredientsList) => {
     //calculate the number to multiply
     const mul = ingredient.quantity / 100;
 
-    //CALCULATE MICRO/MACRO ACC TO QUANTITY
+    //CALCULATE MICRO/MACRO ACCORDING TO THE QUANTITY SPECIFIED
     calcAccToQuantity(ingredient, mul);
   });
 
@@ -217,32 +221,39 @@ const calcRecipeNutriProfile = (ingredientsList) => {
 
 //get the nutriprofile
 const getNutriProfile = (ingredientsList) => {
-  if (!ingredientsList.length)
-    throw new Error("Please provide an ingredient list :(");
+  try {
+    if (!ingredientsList.length)
+      throw new Error("Please provide an ingredient list :(");
 
-  ingredientsList.forEach((el) => {
-    const checkKeysArr = ["quantity", "name", "unit", "nutrientProfile"];
-    let boolArr = [];
-    Object.keys(el).forEach((key) => {
-      if (checkKeysArr.includes(key)) boolArr.push(true);
+    ingredientsList.forEach((el) => {
+      const checkKeysArr = ["quantity", "name", "unit", "nutrientProfile"];
+      let boolArr = [];
+      Object.keys(el).forEach((key) => {
+        if (checkKeysArr.includes(key)) boolArr.push(true);
+      });
+
+      if (boolArr.includes(false))
+        throw new Error(
+          "Please provide the right ingredient Object details :("
+        );
     });
 
-    if (boolArr.includes(false))
-      throw new Error("Please provide the right ingredient Object details :(");
-  });
+    ingredientsList.forEach((el) => {
+      if (!el.nutrientProfile.foodNutrients)
+        throw Error(
+          "No foodNutrients available! Please provide an accurate USDA api object!!"
+        );
 
-  ingredientsList.forEach((el) => {
-    if (!el.nutrientProfile.foodNutrients)
-      throw Error(
-        "No foodNutrients available! Please provide an accurate USDA api object!!"
+      el.nutrientProfile.foodNutrients = calcMicroMacro(
+        el.nutrientProfile.foodNutrients
       );
-    el.nutrientProfile.foodNutrients = calcMicroMacro(
-      el.nutrientProfile.foodNutrients
-    );
-  });
+    });
 
-  //STEP 2:
-  return calcRecipeNutriProfile(ingredientsList);
+    //STEP 2:
+    return calcRecipeNutriProfile(ingredientsList);
+  } catch (error) {
+    console.log(error.message, error);
+  }
 };
 
 module.exports = getNutriProfile;
