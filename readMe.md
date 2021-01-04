@@ -119,7 +119,7 @@ nutriProfile = {
             // ... rest
         ],
 
-        //A Notes array to inform if nutrient profile of any ingredient is not missing!
+        //A Notes array to inform if nutrient profile of any ingredient is missing!
         note: []
     }
 }

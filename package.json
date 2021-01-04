@@ -3,6 +3,14 @@
   "version": "1.0.2",
   "description": "A recipe nutritional calculator",
   "main": "recipeNutritionalProfileCalculator.js",
+  "keywords": [
+    "recipe",
+    "nutrition",
+    "nutritional-Profile",
+    "usda api",
+    "fda",
+    "recipe-nutrition-calculator"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
