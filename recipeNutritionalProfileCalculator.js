@@ -243,13 +243,15 @@ const getNutriProfile = (ingredientsList) => {
     ingredientsList.forEach((el) => {
       const checkKeysArr = ["quantity", "name", "unit", "nutrientProfile"];
       let boolArr = [];
-      Object.keys(el).forEach((key) => {
-        if (checkKeysArr.includes(key)) boolArr.push(true);
+      const keys = new Set(Object.keys(el));
+      Array.from(keys).forEach((key) => {
+        if (checkKeysArr.includes(key))
+          boolArr.push(checkKeysArr.includes(key));
       });
 
-      if (boolArr.includes(false))
+      if (boolArr.length !== 4 || boolArr.includes(false))
         throw new Error(
-          "Please provide the right ingredient Object details :("
+          "Please provide the right ingredient Object details :( The object should only contain [unit, quantity, name, nutrientProfile] keys"
         );
     });
 
