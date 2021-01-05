@@ -26,6 +26,9 @@ const getNutriProfile = require('recipe-nutritional-profile-calculator');
 
 "mcg", "mg", "g", "kg", "oz", "lb", "ml", "l", "tsp", "Tbs", "cup", "ug",
 
+Users can provide units of the ingredients from the above list which will then be converted to "g" for solids and "ml" for liquids for
+further calculations.
+
 ```js
 const ingredientsList = [
   {

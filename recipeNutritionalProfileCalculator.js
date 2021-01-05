@@ -219,6 +219,21 @@ const calcRecipeNutriProfile = (ingredientsList) => {
   };
 };
 
+// convert the units given by user to "g" or "ml"
+const convertUnits = (ingredientsList) => {
+  const newIngredientsList = ingredientsList;
+  //get the array of ingredient objects where the each object will have name, quantity, unit
+  //map over the array to convert each unit to gms or ml
+  newIngredientsList.forEach((el) => {
+    el.quantity = convert(parseInt(el.quantity, 10))
+      .from(el.unit)
+      .to(/(g|kg|oz|lb)/.test(el.unit) ? "g" : "ml");
+    el.unit = /(g|kg|oz|lb)/.test(el.unit) ? "g" : "ml";
+  });
+
+  return newIngredientsList;
+};
+
 //get the nutriprofile
 const getNutriProfile = (ingredientsList) => {
   try {
@@ -244,13 +259,17 @@ const getNutriProfile = (ingredientsList) => {
           "No foodNutrients available! Please provide an accurate USDA api object!!"
         );
 
+      //STEP 1: Segregate energy, micros, macros!!
       el.nutrientProfile.foodNutrients = calcMicroMacro(
         el.nutrientProfile.foodNutrients
       );
     });
 
-    //STEP 2:
-    return calcRecipeNutriProfile(ingredientsList);
+    //STEP 2: convert units to "g" or "ml"
+    const newIngredientsList = convertUnits(ingredientsList);
+
+    //STEP 3: generate nutritional profile after uniformity
+    return calcRecipeNutriProfile(newIngredientsList);
   } catch (error) {
     console.log(error.message, error);
   }
